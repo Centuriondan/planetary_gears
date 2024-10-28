@@ -83,6 +83,8 @@ class PlanetaryGearSet:
         ring_gear_body.newObject("PartDesign::CoordinateSystem", "Center")
         Gui.ActiveDocument.ActiveView.setActiveObject("pdbody", ring_gear_body)
         ring_gear = CreateInternalInvoluteGear.create()
+        ring_gear.num_teeth = obj.ring_teeth
+        ring_gear.module = obj.module
         self.ring_gear_name = ring_gear.Name
 
         # now add the link object which is shown in the "assembly" of the gearset
@@ -99,7 +101,7 @@ class PlanetaryGearSet:
         sun_gear_body.newObject("PartDesign::CoordinateSystem", "Center")
         Gui.ActiveDocument.ActiveView.setActiveObject("pdbody", sun_gear_body)
         sun_gear = CreateInvoluteGear.create()
-        sun_gear.teeth = obj.sun_teeth
+        sun_gear.num_teeth = obj.sun_teeth
         sun_gear.module = obj.module
         self.sun_gear_name = sun_gear.Name
 
@@ -117,7 +119,7 @@ class PlanetaryGearSet:
         planet_gear_body.newObject("PartDesign::CoordinateSystem", "Center")
         Gui.ActiveDocument.ActiveView.setActiveObject("pdbody", planet_gear_body)
         planet_gear = CreateInvoluteGear.create()
-        planet_gear.teeth = obj.planet_teeth
+        planet_gear.num_teeth = obj.planet_teeth
         planet_gear.module = obj.module
         self.planet_gears_links = []
         self.planet_gear_name = planet_gear.Name
@@ -154,11 +156,11 @@ class PlanetaryGearSet:
         planet_gear = App.ActiveDocument.getObject(self.planet_gear_name)
 
         expression = f"<<{obj.Name}>>.ring_teeth"
-        ring_gear.setExpression("teeth", expression)
+        ring_gear.setExpression("num_teeth", expression)
         expression = f"<<{obj.Name}>>.sun_teeth"
-        sun_gear.setExpression("teeth", expression)
+        sun_gear.setExpression("num_teeth", expression)
         expression = f"<<{obj.Name}>>.planet_teeth"
-        planet_gear.setExpression("teeth", expression)
+        planet_gear.setExpression("num_teeth", expression)
 
         for param in parameters:
             expression = f"<<{obj.Name}>>.{param}"
